@@ -27,19 +27,19 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         def _level_order(root: Optional[TreeNode], ans: List[List[int]]) -> Optional[List[List[int]]]:
             que = deque([root])
-            ans.append([root.val])
             tmp = []
-            while sk:
+            while que:
                 tmp.clear()
-                while sk:
-                    a = sk.pop() 
-                    if a:
-                        tmp.append(a.left)
-                        tmp.append(a.right)
-                res = [node.val for node in tmp if node]
-                if res:
-                    ans.append(res)
-                sk.extend(tmp)
+                while que:
+                    node = que.popleft() 
+                    if node :
+                        tmp.append(node)
+                for node in tmp:
+                    que.append(node.left),que.append(node.right)
+                if tmp:
+                    ans.append([node.val for node in tmp])
+                
+            
         if not root:
             return []
         ans = [] 
