@@ -20,7 +20,6 @@ class TreeNode:
 
 class ShowTree:
     def inorder(self, root: Optional[TreeNode]) -> List[int]:
-        ans = []
         def inorder(root: Optional[TreeNode], ans: List[int]):
             if not root:
                 return
@@ -30,6 +29,17 @@ class ShowTree:
             if root.right:
                 inorder(root.right, ans)
 
+        ans = []
         inorder(root, ans)
         return ans
+
+    def preorder(self, root: Optional[TreeNode]) -> List[int]:
+        def _preorder(root: Optional[TreeNode], ans: List[int]):
+            pass
+        pass
+
+    def midorder(self, root: Optional[TreeNode]) -> List[int]:
+        def _midorder(root: Optional[TreeNode], ans: List[int]):
+            pass
+        pass
 
