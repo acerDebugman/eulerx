@@ -20,9 +20,25 @@ class TreeNode:
         self.right = right
 
 class ShowTree:
-    def build_tree_from_level_order_lst(lst):
-                
-        pass
+    def build_tree_from_level_order_lst(self, lst) -> Optional[TreeNode]:
+        if not lst:
+            return None
+        root = TreeNode(lst[0])
+        q = collections.deque()
+        q.append((root,0))
+        while q:
+            node,n = q.popleft()
+            if node:
+                l, r = 2*n+1, 2*n+2
+                if l < len(lst) and lst[l]:
+                    lnode = TreeNode(lst[l])
+                    node.left = lnode
+                    q.append((lnode, l))
+                if r < len(lst) and lst[r]:
+                    rnode = TreeNode(lst[r])
+                    node.right = rnode
+                    q.append((rnode, r))
+        return root
 
     def levelorder(self, root: Optional[TreeNode]) -> List[int]:
         def levelorder(root: Optional[TreeNode], ans: List[int]):
@@ -87,4 +103,11 @@ class ShowTree:
         ans = []
         _postorder(root, ans)
         return ans
+
+
+class ShowList:
+    def showlist(lst):
+        for row in lst:
+            print(row)
+        
 
