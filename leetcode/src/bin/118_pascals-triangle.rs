@@ -13,14 +13,36 @@
 struct Solution;
 impl Solution {
     pub fn generate(num_rows: i32) -> Vec<Vec<i32>> {
+        let mut rs = vec![vec![1]];
+        if num_rows == 1 {
+            return rs;
+        }
+        for i in 1..(num_rows as usize) {
+            let mut new_v = vec![0;i+1];
+            new_v[0] = 1; new_v[i]=1;
+            let (mut s, mut e) = (1, i-1);
             
+            while s < e {
+                new_v[s] = rs[i-1][s-1] + rs[i-1][s];
+                new_v[e] = rs[i-1][e-1] + rs[i-1][e];
+                s+=1; e-=1;
+            }
+            if s == e {
+                new_v[s] = rs[i-1][s-1] + rs[i-1][s];
+            }
+            
+            rs.push(new_v); 
+        }
+
+        return rs 
     }
 }
 
 pub fn main() {
     //let nums = vec![1,2,3,4];    
     //println!("{:?}", nums);
-    let n = 5;
+    //let n = 1;
+    let n = 10;
     let ans = Solution::generate(n);
     println!("ans: {:?}", ans);
 }
