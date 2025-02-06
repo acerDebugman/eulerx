@@ -22,9 +22,30 @@
 解释：原数组为 [11,13,15,17] ，旋转 4 次得到输入数组。
 */
 
+/*
+ * 1. 这个题的重点是原来的严格递增的数组，旋转有一个特性：最后的元素，不会高于第一个元素！
+ * 所以可以放心用 nums[pivot] < nums[r] 元素进行比较，pivot位置的元素比 r
+ * 的高，说明左边是有序的；pivot的元素比右边低，说明右边是有序的; 
+ * 最低的元素肯定不再最低的一边
+ * 2. 边界的问题，while l<=r 还是  while l<r , 重点还是要考虑 最后只剩下 2 个元素边界怎么变化！比如
+ *    不论前面怎么二分处理，最后的场景一定是落到 [1,2] 或者 [2,1] 这样的数，而pivot = l + (r-l)/2
+ *    是落到左边的，因此是l向前，还是r向后，要根据具体情况区分了！
+ */
 struct Solution;
 impl Solution {
     pub fn find_min(nums: Vec<i32>) -> i32 {
+        let (mut l, mut r) = (0, nums.len() as i32 - 1);
+        while l < r {
+            let pivot = l + (r - l) / 2;
+            if nums[pivot as usize] < nums[r as usize] {
+                r = pivot;
+            } else {
+                l = pivot + 1;
+            }
+        }
+        return nums[l as usize] 
+    }
+    pub fn find_min2(nums: Vec<i32>) -> i32 {
         let (mut l, mut r) = (0, nums.len() as i32 - 1);
         let mut min = nums[0];
         while l < r {
@@ -43,8 +64,8 @@ impl Solution {
 }
 
 pub fn main() {
-    //let nums = vec![4,5,6,7,0,1,2];
-    let nums = vec![2,1];
+    let nums = vec![4,5,6,7,0,1,2];
+    //let nums = vec![2,1];
     println!("{:?}", nums);
     let ans = Solution::find_min(nums);
     println!("ans: {:?}", ans);
